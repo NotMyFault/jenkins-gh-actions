@@ -5,7 +5,7 @@ on:
     types:
       - prereleased
     tags:
-      - '2.*.*'
+      - 'jenkins-2\.\d+\.\d{1,2}$'
 
 jobs:
   post:
