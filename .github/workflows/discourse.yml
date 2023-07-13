@@ -2,7 +2,10 @@ name: Post release topic on Discourse
 
 on:
   release:
-    types: [prereleased]
+    types:
+      - prereleased
+    tags:
+      - '2.*.*'
 
 jobs:
   post:
@@ -13,4 +16,4 @@ jobs:
         discourse-api-key: ${{ secrets.DISCOURSE_RELEASES_API_KEY }}
         discourse-base-url: https://community.jenkins.io/
         discourse-author-username: NotMyFault
-        discourse-category: 10
+        discourse-category: 4
