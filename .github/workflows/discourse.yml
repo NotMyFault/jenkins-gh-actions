@@ -8,26 +8,15 @@ jobs:
   post:
     runs-on: ubuntu-latest
     steps:
-      - name: Check if GITHUB_REF matches regex
-        id: regex_check
-        run: |
-          echo "Release Tag Name: ${{ github.event.release.tag_name }}"
-          if [[ ${{ github.event.release.tag_name }} =~ ^refs/tags/jenkins-2\.\d{3}\.\d{1,3}(?:-rc)?$ ]]; then
-            echo "GITHUB_REF matches the regex syntax."
-            echo "REF_MATCHES=true" >> $GITHUB_ENV
-          else
-            echo "GITHUB_REF does not match the regex syntax."
-            echo "REF_MATCHES=false" >> $GITHUB_ENV
-          fi
       - uses: roots/discourse-topic-github-release-action@main
-        if: env.REF_MATCHES == 'true'
+        if: contains(github.event.release.tag_name, 'refs/tags/jenkins-2\.\d{3}\.\d{1,3}(?:-rc)?$')
         with:
           discourse-api-key: ${{ secrets.DISCOURSE_RELEASES_API_KEY }}
           discourse-base-url: https://community.jenkins.io/
           discourse-author-username: jenkins-release-bot
           discourse-category: 23
       - name: Send mail
-        if: env.REF_MATCHES == 'true'
+        if: contains(github.event.release.tag_name, 'refs/tags/jenkins-2\.\d{3}\.\d{1,3}(?:-rc)?$')
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
