@@ -20,6 +20,8 @@ jobs:
           #  * smtp://user:password@server:port
           #  * smtp+starttls://user:password@server:port
           connection_url: ${{secrets.MAIL_CONNECTION}}
+          server_address: smtp.gmail.com
+          server_port: 465
           secure: true
           subject: Github Actions job result
           to: intellectualsites@googlegroups.com
