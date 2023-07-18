@@ -24,9 +24,8 @@ jobs:
           username: ${{secrets.MAIL_USERNAME}}
           password: ${{secrets.MAIL_PASSWORD}}
           secure: true
-          subject: Github Actions job result
+          subject: ${{ github.event.release.tag_name }} has been released
           to: intellectualsites@googlegroups.com
           from: Jenkins Release Bot
-          body: Build job of ${{github.repository}} completed successfully!
-          ignore_cert: true
+          body: ${{ github.event.release.body }}
           convert_markdown: true
