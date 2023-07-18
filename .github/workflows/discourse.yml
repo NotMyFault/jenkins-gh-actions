@@ -28,4 +28,3 @@ jobs:
           to: intellectualsites@googlegroups.com
           from: Jenkins Release Bot
           body: ${{ github.event.release.body }}
-          convert_markdown: true
