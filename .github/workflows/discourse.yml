@@ -1,7 +1,7 @@
 name: Post release topic on Discourse
 
 on:
-  release:
+  create:
     tags:
       - 'jenkins-2\.\d{3}\.\d{1,3}(?:-rc)?$'
 
@@ -12,13 +12,6 @@ jobs:
       - name: Send mail
         uses: dawidd6/action-send-mail@v3
         with:
-          # Specify connection via URL (replaces server_address, server_port, secure,
-          # username and password)
-          #
-          # Format:
-          #
-          #  * smtp://user:password@server:port
-          #  * smtp+starttls://user:password@server:port
           server_address: smtp.gmail.com
           server_port: 465
           username: ${{secrets.MAIL_USERNAME}}
@@ -27,4 +20,5 @@ jobs:
           subject: ${{ github.event.release.tag_name }} has been released
           to: intellectualsites@googlegroups.com
           from: Jenkins Release Bot
-          body: ${{ github.event.release.body }}
+          html_body: ${{ github.event.release.body }}
+          convert_markdown: true
