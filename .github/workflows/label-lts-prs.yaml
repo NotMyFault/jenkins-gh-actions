@@ -1,0 +1,23 @@
+name: Add into-lts Label to PRs on Forks
+
+on: [pull_request, pull_request_target]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Target Branch Name and Add Label
+        if: startsWith(github.event.pull_request.base.ref, 'stable-')
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.issues.addLabels({
+              owner: context.payload.repository.owner.login,
+              repo: context.payload.repository.name,
+              issue_number: context.payload.pull_request.number,
+              labels: ['into-lts']
+            });
